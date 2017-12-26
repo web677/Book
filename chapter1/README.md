@@ -1,4 +1,4 @@
-这段时间折腾了一个小小的练手项目，前端采用<img src="./vue.png" width="20" alt="vue"/> + <img src="./webpack.svg" width="20" alt="webpack"/>组织和构建代码，服务端用的<img src="./nodejs.jpeg" width="40" alt="nodejs"/> + <img src="./mongodb.jpg" width="70" alt="mongodb.jpg"/>。目的在踩踩坑，熟悉一下Vue+Webpack的开发模式，尝试理解一些服务端的概念和思想。前几天去D2听了分享，忽的觉得目前自己更应该纠结一下前端基础与原理的东西。在工具上太耗费时间不是目前该有的状态。就以此暂做一个小结与回顾，接下来方向暂转到前端基础、原理与设计模式学习。
+这段时间折腾了一个小小的练手项目，前端采用<img src="../vue.png" width="20" alt="vue"/> + <img src="../webpack.svg" width="20" alt="webpack"/>组织和构建代码，服务端用的<img src="../nodejs.jpeg" width="40" alt="nodejs"/> + <img src="../mongodb.jpg" width="70" alt="mongodb.jpg"/>。目的在踩踩坑，熟悉一下Vue+Webpack的开发模式，尝试理解一些服务端的概念和思想。前几天去D2听了分享，忽的觉得目前自己更应该纠结一下前端基础与原理的东西。在工具上太耗费时间不是目前该有的状态。就以此暂做一个小结与回顾，接下来方向暂转到前端基础、原理与设计模式学习。
 
 项目本身很简单，代码量也不多。只是实现了最简单的一些功能，包括：登录、登录态保存、退出登录、注册。还有一个简单的爬虫，爬取一天内发布的，工作经验1~3年的会计招聘岗位及简单信息，可以查看详情和收藏。
 
