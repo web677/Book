@@ -1,7 +1,7 @@
 const { spawn } = require('child_process')
 const nodemailer = require('nodemailer')
 
-setInterval(() => {
+setTimeout(() => {
     let gitPull = spawn("git", ["pull"])
 
     gitPull.stdout.on("data", data => {
