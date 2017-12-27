@@ -18,8 +18,8 @@ setTimeout(() => {
             from: '"来自老李的邮件👻" <407907175@qq.com>',
             to: 'ly@fanli.com',
             subject: 'Hello 老李',
-            text: '你的book更新成功并自动构建成功啦',
-            html: '<b>哈哈哈</b>'
+            text: 'book.eshengeshu.com',
+            html: '<b>你的book更新成功并自动构建成功啦</b>'
         }
 
         transporter.sendMail(mailOptions)
@@ -38,8 +38,8 @@ setTimeout(() => {
             from: '"来自老李的邮件👻" <407907175@qq.com>',
             to: 'ly@fanli.com',
             subject: 'Hello 老李',
-            text: '你的book更新失败啦，无法自动构建了，快去看看',
-            html: '<b>别墨迹</b>'
+            text: 'book.eshengeshu.com',
+            html: '<b>你的book更新失败啦，无法自动构建了，快去看看</b>'
         }
 
         transporter.sendMail(mailOptions)
