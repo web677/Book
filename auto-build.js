@@ -1,50 +1,51 @@
-const { spawn } = require('child_process')
-const nodemailer = require('nodemailer')
+const http = require('http')
+const githubWebhook = require('github-webhook-handler')({path: '/', secret: 'root'})
 
-setTimeout(() => {
-    let gitPull = spawn("git", ["pull"])
-
-    gitPull.stdout.on("data", data => {
-        let gitbookBuild = spawn("gitbook", ["build"])
-        let transporter = nodemailer.createTransport({
-            service: "qq",
-            auth: {
-                user: "407907175@qq.com",
-                pass: "yqxhzqgnpmmzbghj"
-            }
-        })
-
-        let mailOptions = {
-            from: '"来自老李的邮件👻" <407907175@qq.com>',
-            to: 'ly@fanli.com',
-            subject: 'Hello 老李',
-            text: 'book.eshengeshu.com',
-            html: '<b>你的book更新成功并自动构建成功啦</b>'
+const sendEmail = (options = { subject: "来自book.eshengeshu.com的提醒", html: "<b>您的book有新的更新</b>"}) => {
+    let nodemailer = require('nodemailer')
+    
+    let transporter = nodemailer.createTransport({
+        service: "qq",
+        auth: {
+            user: "407907175@qq.com",
+            pass: "yqxhzqgnpmmzbghj"
         }
-
-        transporter.sendMail(mailOptions)
     })
 
-    gitPull.stderr.on("data", data => {
-        let transporter = nodemailer.createTransport({
-            service: "qq",
-            auth: {
-                user: "407907175@qq.com",
-                pass: "yqxhzqgnpmmzbghj"
-            }
-        })
+    let mailOptions = {
+        from: '"来自老李的邮件👻" <407907175@qq.com>',
+        to: 'ly@fanli.com',
+        subject: options.subject,
+        text: 'book.eshengeshu.com',
+        html: options.html
+    }
 
-        let mailOptions = {
-            from: '"来自老李的邮件👻" <407907175@qq.com>',
-            to: 'ly@fanli.com',
-            subject: 'Hello 老李',
-            text: 'book.eshengeshu.com',
-            html: '<b>你的book更新失败啦，无法自动构建了，快去看看</b>'
-        }
+    transporter.sendMail(mailOptions)
 
-        transporter.sendMail(mailOptions)
+}
+
+const runCmd = (cmd, args, callback) => {
+    let { spawn } = require('child_process')
+    let childProcess = spawn(cmd, args)
+
+    childProcess.stdout.on("data", (data) => {
+        callback(null, data)
     })
 
-},1000)
+    childProcess.stderr.on("data", (data) => {
+        callback(data)
+    })
 
+}
+
+http.createServer(function (req, res) {
+    githubWebhook(req, res, function (err) {
+        res.statusCode = 404
+        res.end('no such location')
+    })
+}).listen(4001)
+
+githubWebhook.on("push", (event) => {
+    console.log(JSON.stringify(event))
+})
 
