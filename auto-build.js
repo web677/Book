@@ -1,5 +1,5 @@
 const http = require('http')
-const githubWebhook = require('github-webhook-handler')({path: '/', secret: 'root'})
+const githubWebhook = require('github-webhook-handler')({path: '/', secret: '123qwe,,,'})
 
 const sendEmail = (options = { subject: "来自book.eshengeshu.com的提醒", html: "<b>您的book有新的更新</b>"}) => {
     let nodemailer = require('nodemailer')
