@@ -4,7 +4,7 @@ var handler = createHandler({ path: '', secret: '123qwe,,,'})
 
 http.createServer(function (req, res) {
     handler(req, res, function (err) {
-        console.log(JSON.stringify(req))
+        console.log(req)
         res.statusCode = 200
         res.end('yeah got it')
     })
