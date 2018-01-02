@@ -45,10 +45,18 @@ http.createServer(function (req, res) {
     })
 }).listen(4001)
 
-githubWebhook.on("push", (event) => {
-    console.log("ok:")
+
+githubWebhook.on('push', function (event) {
+    console.log('Received a push event for %s to %s',
+        event.payload.repository.name,
+        event.payload.ref)
     console.log(JSON.stringify(event))
 })
+
+// githubWebhook.on("push", (event) => {
+//     console.log("ok:")
+//     console.log(JSON.stringify(event))
+// })
 
 githubWebhook.on("error", (event) => {
     console.log("error:")
