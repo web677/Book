@@ -51,13 +51,13 @@ githubWebhook.on("push", (event) => {
         committer: event.payload.head_commit.committer.name,
         email: event.payload.head_commit.committer.email
     }
-    runCMD('git', 'pull', (err, data) => {
+    runCMD('git', ['pull'], (err, data) => {
         if(err){
             sendEmail({
                 html: `<b>${pushInfo.committer}(${pushInfo.email})提交到github仓库<a href="${pushInfo.url}">${pushInfo.url}</a>的更新，在服务器自动更新时出错${err.toString()}，请及时查看<b>`
             })
         }else{
-            runCMD('gitbook', 'build', (err, data) => {
+            runCMD('gitbook', ['build'], (err, data) => {
                 if(err){
                     sendEmail({
                         html: `<b>${pushInfo.committer}(${pushInfo.email})提交到github仓库<a href="${pushInfo.url}">${pushInfo.url}</a>的更新，在构建gitbook时发生错误，请及时查看<b>`
