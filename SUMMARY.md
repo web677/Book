@@ -15,4 +15,6 @@
     * [前端代码组织与部署](chapter4/section1.md)
     * [server端代码组织与部署](chapter4/section2.md)
     * [server端其他](chapter4/section3.md)
+* [做点小题](chapter5/README.md)
+    * [椭圆可点区域的实现](chapter5/section1.md)
 
