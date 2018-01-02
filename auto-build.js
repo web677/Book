@@ -46,8 +46,13 @@ http.createServer(function (req, res) {
 }).listen(4001)
 
 githubWebhook.on("push", (event) => {
+    console.log("ok:")
     console.log(JSON.stringify(event))
 })
 
+githubWebhook.on("error", (event) => {
+    console.log("error:")
+    console.log(JSON.stringify(event))
+})
 
 // test
