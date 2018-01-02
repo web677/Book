@@ -28,8 +28,14 @@ const runCMD = (cmd, args, callback) => {
     let { spawn } = require('child_process')
     let childProcess = spawn(cmd, args)
 
+    var res = ""
+
     childProcess.stdout.on("data", (data) => {
-        callback(null, data)
+        res += data
+    })
+
+    childProcess.stdout.on("end", () => {
+        callback(null, res)
     })
 
     childProcess.stderr.on("data", (data) => {
