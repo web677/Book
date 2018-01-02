@@ -53,17 +53,19 @@ githubWebhook.on("push", (event) => {
     }
     runCMD('git', ['pull'], (err, data) => {
         if(err){
+            console.log("000000")
             sendEmail({
                 html: `<b>${pushInfo.committer}(${pushInfo.email})提交到github仓库<a href="${pushInfo.url}">${pushInfo.url}</a>的更新，在服务器自动更新时出错${err.toString()}，请及时查看<b>`
             })
         }else{
             runCMD('gitbook', ['build'], (err, data) => {
                 if(err){
+                    console.log("1111111")
                     sendEmail({
                         html: `<b>${pushInfo.committer}(${pushInfo.email})提交到github仓库<a href="${pushInfo.url}">${pushInfo.url}</a>的更新，在构建gitbook时发生错误，请及时查看<b>`
                     })
                 }else{
-                    console.log("0k")
+                    console.log("2222222")
                     sendEmail({
                         html: `<b>${pushInfo.committer}(${pushInfo.email})提交到github仓库<a href="${pushInfo.url}">${pushInfo.url}</a>的更新，构建成功，请知悉<b><br><br><center><a href="http://book.eshengeshu.com/">点我查看</a></center>`
                     })
