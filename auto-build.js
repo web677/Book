@@ -8,7 +8,7 @@ const sendEmail = (options = { subject: "来自book.eshengeshu.com的提醒", ht
         service: "qq",
         auth: {
             user: "407907175@qq.com",
-            pass: "yqxhzqgnpmmzbghj"
+            pass: "qkmynyyyvxojbjbf"
         }
     })
 
