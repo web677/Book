@@ -63,6 +63,7 @@ githubWebhook.on("push", (event) => {
                         html: `<b>${pushInfo.committer}(${pushInfo.email})提交到github仓库<a href="${pushInfo.url}">${pushInfo.url}</a>的更新，在构建gitbook时发生错误，请及时查看<b>`
                     })
                 }else{
+                    console.log("0k")
                     sendEmail({
                         html: `<b>${pushInfo.committer}(${pushInfo.email})提交到github仓库<a href="${pushInfo.url}">${pushInfo.url}</a>的更新，构建成功，请知悉<b><br><center><a href="http://book.eshengeshu.com/">点我查看</a></center>`
                     })
