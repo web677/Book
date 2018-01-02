@@ -65,7 +65,7 @@ githubWebhook.on("push", (event) => {
                 }else{
                     console.log("0k")
                     sendEmail({
-                        html: `<b>${pushInfo.committer}(${pushInfo.email})提交到github仓库<a href="${pushInfo.url}">${pushInfo.url}</a>的更新，构建成功，请知悉<b><br><center><a href="http://book.eshengeshu.com/">点我查看</a></center>`
+                        html: `<b>${pushInfo.committer}(${pushInfo.email})提交到github仓库<a href="${pushInfo.url}">${pushInfo.url}</a>的更新，构建成功，请知悉<b><br><br><center><a href="http://book.eshengeshu.com/">点我查看</a></center>`
                     })
                 }
             })
