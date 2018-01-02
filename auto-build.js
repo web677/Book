@@ -40,8 +40,8 @@ const runCmd = (cmd, args, callback) => {
 
 http.createServer(function (req, res) {
     githubWebhook(req, res, function (err) {
-        res.statusCode = 404
-        res.end('no such location')
+        res.statusCode = 200
+        res.end('got it')
     })
 }).listen(4001)
 
