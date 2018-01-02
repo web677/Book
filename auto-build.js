@@ -73,6 +73,9 @@ githubWebhook.on("push", (event) => {
 })
 
 githubWebhook.on("error", (event) => {
-    console.log(JSON.stringify(event))
+    sendEmail({
+        html: `您本次在github的提交并未从成功推送到book.eshengeshu.com/webhook，请前往查看`
+    })
 })
 
+// test
