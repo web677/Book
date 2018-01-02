@@ -86,9 +86,3 @@ githubWebhook.on("error", (event) => {
         html: `您本次在github的提交并未从成功推送到book.eshengeshu.com/webhook，请前往查看`
     })
 })
-
-// test
-// test
-// test
-// test
-// test
