@@ -58,6 +58,7 @@ githubWebhook.on("push", (event) => {
                 html: `<p>${pushInfo.committer}(${pushInfo.email})提交到github仓库<a href="${pushInfo.url}">${pushInfo.url}</a>的更新，在服务器自动更新成功</p
                         <p>${data.toString()}</p>`
             })
+
             runCMD('gitbook', ['build'], (err, data) => {
                 sendEmail({
                     html: `<p>${pushInfo.committer}(${pushInfo.email})提交到github仓库<a href="${pushInfo.url}">${pushInfo.url}</a>的更新，构建成功，请知悉</p>
