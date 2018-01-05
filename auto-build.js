@@ -61,7 +61,7 @@ githubWebhook.on("push", (event) => {
             runCMD('gitbook', ['build'], (err, data) => {
                 sendEmail({
                     html: `<p>${pushInfo.committer}(${pushInfo.email})提交到github仓库<a href="${pushInfo.url}">${pushInfo.url}</a>的更新，构建成功，请知悉</p>
-                            <p>${data.toString().replaceAll('[0;36m', '<br>').replaceAll('[0m', '').replaceAll('[0;32m', '')}</p>
+                            <p>${data.toString().replac(/\[0;36m/igm, '<br>').replaceAll(/(\[0m)|(\[0;32m)/igm, '')}</p>
                             <center><a href="http://book.eshengeshu.com/">点我查看结果</a></center>`
                 })
             })
@@ -73,6 +73,3 @@ githubWebhook.on("error", (event) => {
         html: `您本次在github的提交并未从成功推送到book.eshengeshu.com/webhook，请前往查看`
     })
 })
-
-// test
-// test
