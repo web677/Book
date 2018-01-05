@@ -11,13 +11,13 @@
 	
 * 代码组织结构
 
-	* build: 主要存放构建相关配置文件，没有复杂需求，所以主要改动了其中的`webpack.base.conf.js`和`webpack.dev.conf.js`及`webpack.prod.conf.js`，主要配置构建时生成文件名、路径、模块、模板等
-	* config: 主要存放代码依赖相关配置，比如环境、模块路径、模块名等
+	* build: 主要存放构建相关配置文件，没有复杂需求，所以主要改动了其中的`webpack.base.conf.js`和`webpack.dev.conf.js`及`webpack.prod.conf.js`，主要配置构建时生成的文件名、路径、模块、模板等
+	* config: 主要存放代码依赖的相关配置，比如环境、模块路径、模块名等
 	* src: 主要代码
-		* components: 小组件，比如一个标注的form，比如公用的header，比如前端格式验证的js
-		* entry: 开发环境是单页应用，所有是单一入口，生产环境是多个单页应用，所以有多个入口，都在entry下配置
+		* components: 小组件，比如一个标准的form，比如公用的header，比如前端格式验证的js
+		* entry: 开发环境是单页应用，所以是单一入口，生产环境是多个单页应用，所以有多个入口，都在entry下配置
 		* page: 页面代码，引入组件组成页面，页面本身逻辑，引入样式等
-		* routes: 开发环境只有一个dev-router.js，生产环境多个路由，通过服务端路由分发到前面的entry通过前端router到page
+		* routes: 开发环境只有一个dev-router.js，生产环境多个路由，每个单页对应一个路由，通过服务端路由分发到前面的entry通过前端router到page
 		* App.vue: 入口文件
 	* static: 静态文件
 		* css
@@ -28,7 +28,7 @@
 
 * 数据传递
 
-因为就是练手页面，数据是在简单，就采用的是Event Bus的方式进行同一单页应用，不同页面间的数据传递和通信
+因为就是练手页面，数据很简单，采用的是Event Bus的方式进行同一单页应用，不同页面间的数据传递和通信
 
 贴几个文件的代码
 	
