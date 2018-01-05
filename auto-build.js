@@ -38,11 +38,6 @@ const runCMD = (cmd, args, callback) => {
         callback(null, res)
     })
 
-    childProcess.stderr.on("data", (data) => {
-        console.log("哈哈:" + data)
-        callback(data)
-    })
-
 }
 
 http.createServer(function (req, res) {
@@ -59,24 +54,17 @@ githubWebhook.on("push", (event) => {
         email: event.payload.head_commit.committer.email
     }
     runCMD('git', ['pull'], (err, data) => {
-        if(err){
-            console.log("err:" + err)
-            // sendEmail({
-            //     html: `<b>${pushInfo.committer}(${pushInfo.email})提交到github仓库<a href="${pushInfo.url}">${pushInfo.url}</a>的更新，在服务器自动更新时出错${err.toString()}，请及时查看<b>`
-            // })
-        }else{
-            runCMD('gitbook', ['build'], (err, data) => {
-                if(err){
-                    // sendEmail({
-                    //     html: `<b>${pushInfo.committer}(${pushInfo.email})提交到github仓库<a href="${pushInfo.url}">${pushInfo.url}</a>的更新，在构建gitbook时发生错误，请及时查看<b>`
-                    // })
-                }else{
-                    // sendEmail({
-                    //     html: `<b>${pushInfo.committer}(${pushInfo.email})提交到github仓库<a href="${pushInfo.url}">${pushInfo.url}</a>的更新，构建成功，请知悉<b><br><br><center><a href="http://book.eshengeshu.com/">点我查看</a></center>`
-                    // })
-                }
+            sendEmail({
+                html: `<p style="line-height: 20px; font-size="16px;">${pushInfo.committer}(${pushInfo.email})提交到github仓库<a href="${pushInfo.url}">${pushInfo.url}</a>的更新，在服务器自动更新成功</p
+                        <p style="line-height: 20px; font-size="16px;">${data.toString()}</p>`
             })
-        }
+            runCMD('gitbook', ['build'], (err, data) => {
+                sendEmail({
+                    html: `<p style="line-height: 20px; font-size="16px;">${pushInfo.committer}(${pushInfo.email})提交到github仓库<a href="${pushInfo.url}">${pushInfo.url}</a>的更新，构建成功，请知悉</p>
+                            <p style="line-height: 20px; font-size="16px;">${data.toString()}</p>
+                            <center style="line-height: 20px; font-size="16px;"><a href="http://book.eshengeshu.com/">点我查看结果</a></center>`
+                })
+            })
     })
 })
 
