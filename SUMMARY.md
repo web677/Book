@@ -3,7 +3,7 @@
 * [简介](README.md)
 * [JavaScript基础回炉系列](chapter1/README.md)
     * [JavaScript基础之数据类型](chapter1/section1.md)
-    * [JavaScript基础之原型、构造函数、作用域那些](chapter1/section2.md)
+    * [JavaScript基础之构造函数、原型、原型链那些](chapter1/section2.md)
 * [技术思考](chapter2/README.md)
     * [Vue原理简析](chapter2/section1.md)
     * [Vue之VisualDOM](chapter2/section2.md)

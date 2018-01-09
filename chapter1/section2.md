@@ -1,4 +1,4 @@
-## JavaScript基础之原型、构造函数、作用域那些
+## JavaScript基础之构造函数、原型、原型链那些
 
 ####普通对象和函数对象
 
@@ -43,4 +43,43 @@ var f1 = new f()
 
 ####prototype
 
-prototype就是一个属性，一个属性
+ - prototype就是一个属性，一个属性而已。只不过有点特殊，只有函数对象及函数对象的实例才配拥有。
+
+ - 函数对象有默认的prototype属性，函数对象的实例没有默认prototype属性的。
+
+ - 函数对象的prototype属性可以被其实例继承且被所有实例共享。
+
+####一种更简单的理解方式
+
+> [Javascript继承机制的设计思想](http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html)
+
+几句话搞定。
+
+1. 类和实例。下例中，f是类（ES5中没有类的概念，但这里为方便理解，可以称之为类），f1是f的实例，f2是f的实例。
+
+	```javascript
+	function f(){
+		this.age = 1;
+	}
+	f.prototype.name = "老李"
+
+	var f1 = new f()
+	var f2 = new f()
+	```
+2. 继承。实例继承类。
+上例中，实例继承的是类的prototype。prototype是所有实例共享的。而`function f(){this.age = 1;}`里的`this`在实例中指的是实例本身。
+
+3. 原型链。上例中，f1.name，会先从自身查找是否有，没有则查找**实例的类的prototype**（`f.constructor.prototype`），还没有则`f.constructor.prototype.constructor.prototype`。
+4. **\_\_proto\_\_**。简单理解：`f.constructor.prototype = f.__proto__`。
+
+```javascript
+function f(){
+	this.age = 1;
+}
+
+console.log(Function.constructor.prototype == Function.__proto__);    //true
+console.log(f.constructor.prototype === f.__proto__);                 //true
+```
+
+
+
