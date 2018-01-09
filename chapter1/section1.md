@@ -1,3 +1,6 @@
+#JavaScript基础之数据类型
+
+
 JavaScript是脚本语言
 ---------------
 
