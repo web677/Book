@@ -49,6 +49,9 @@ var f1 = new f()
 
  - 函数对象的prototype属性可以被其实例继承且被所有实例共享。
 
+
+---
+
 ####一种更简单的理解方式
 
 > [Javascript继承机制的设计思想](http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html)

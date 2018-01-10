@@ -8,6 +8,7 @@
     * [Vue原理简析](chapter2/section1.md)
     * [Vue之VisualDOM](chapter2/section2.md)
     * [Vue之数据绑定与视图更新](chapter2/section3.md)
+    * [编写可维护的JavaScript](chapter2/section4.md)
 * [技术扩展](chapter3/README.md)
     * [Nginx配置基础](chapter3/section1.md)
     * [防火墙配置基础](chapter3/section2.md)
