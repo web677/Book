@@ -97,7 +97,7 @@ var result = something1 + something2 + something3 + something4 + something5 +
 
 ####语句和表达式
 
-* 所有的快语句都应当使用花括号，包括：
+* 所有的块语句都应当使用花括号，包括：
  * if
  * for
  * while
@@ -108,7 +108,7 @@ var result = something1 + something2 + something3 + something4 + something5 +
 
 ```javascript
 //方式1
-if (condition){
+if (condition) {
 	dosomething();
 } else {
 	doSomethingElse();
