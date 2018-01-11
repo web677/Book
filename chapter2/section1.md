@@ -14,7 +14,7 @@ Model、View、ViewModel。其中Model和ViewModel互相映射，View和ViewMode
 
  * 你可以在任何阶段使用Vue。页面上的一个弹窗 => 某个单页面 => 复杂的页面应用 => 复杂的一套web解决方案
  * 你不必各个层都使用Vue，仅需要View层？可以，自己写好VM即可
- * 核心库相对简单，更多的路由/ajax/数据流管理，在需要的时候可以自己引用。但不引用时，也可以高效的运行。
+ * 核心库相对简单，更多的路由/ajax/数据流管理，在需要的时候可以自己引用；单纯核心库，也可以高效的运行
 
 ####响应式
 
@@ -22,4 +22,4 @@ Model、View、ViewModel。其中Model和ViewModel互相映射，View和ViewMode
 
 <img src="../vue-data.png">
 
-Vue中从数据到视图，可以简单分为几大块：[Data监听与更新](../chapter2/section2.html)、[VisualDOM && Render](../chapter2/section3.html)、[Wather的实现]((../chapter2/section4.html))。在随后几篇笔记中会分块分析每一步的实现。
+Vue中从数据到视图，可以简单分为几大块：[Data监听与更新](../chapter2/section2.html)、[VisualDOM && Render](../chapter2/section3.html)、[Wather的实现](../chapter2/section4.html)。在随后几篇笔记中会分块分析每一步的实现。
