@@ -1,5 +1,5 @@
-三、DOM Scripting DOM编程
-=====================
+#三、DOM Scripting DOM编程
+
 我们都知道对DOM操作的代价昂贵，这往往成为网页应用中的性能瓶颈。在解决这个问题之前，我们需要先知道什么是DOM，为什么他会很慢。
 
 `DOM in the Browser World` 浏览器中的DOM
@@ -154,7 +154,7 @@ var computedValue,
 	bodystyle.color = 'green'; 
 	tmp = computedValue.backgroundAttachment;
 ```
-上面示例中，`body`的字体颜色被改变了三次，每次改变后都对body的样式信息进行了查询，虽然查询的信息和字体颜色无关，但是浏览器会因此刷新渲染队列并进行重排，所以共进行了三次重排，也理所当然的进行了三次重绘，这里可以改进一下：
+上面示例中，`body`的字体颜色被改变了三次，每次改变后都对`body`的样式信息进行了查询，虽然查询的信息和字体颜色无关，但是浏览器会因此刷新渲染队列并进行重排，所以共进行了三次重排，也理所当然的进行了三次重绘，这里可以改进一下：
 
 ```
 var computedValue,

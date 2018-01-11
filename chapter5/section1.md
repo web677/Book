@@ -1,6 +1,6 @@
 早前阅读[高性能JavaScript][1]一书所做笔记。
 
-一、Loading and Execution 加载和运行
+#一、Loading and Execution 加载和运行
 =============================
 
 从加载和运行角度优化，源于`JavaScript`运行会阻塞UI更新，`JavaScript`脚本的下载、解析、运行过程中，页面的下载和解析过程都会停下来等待，因为脚本可能在运行过程中修改页面内容。
@@ -10,7 +10,7 @@
 `Script Positioning` 脚本位置
 -----------------------
 
-将<script>标签放在尽可能接近<body>标签底部的位置，尽量减少对页面下载的影响。
+将`<script>`标签放在尽可能接近`<body>`标签底部的位置，尽量减少对页面下载的影响。
  
 
  `Grouping Scripts` 成组脚本
@@ -229,3 +229,5 @@ function foo(ele,className1,className2) {
 在这里，我们访问了两次`ele`的`className`属性，但是这两次访问时，`ele`的`className`属性值是一样的，因此可以在这里用一个变量暂存`ele.className`的值，避免两次访问导致的两次搜索过程。处理嵌套属性更需要用这种办法来处理。
 
 **针对数据访问导致的相关性能问题，主要的解决办法就是对数据进行暂存，比如将全局变量暂存为局部变量，减少作用域链的深入搜索；将实例的属性暂存，减少对原型链的多次深入搜索；另一个就是减少使用动态作用域和闭包。**
+
+ [1]: https://www.amazon.cn/gp/product/B013SGB2AO/ref=ox_sc_act_title_1?ie=UTF8&psc=1&smid=A1AJ19PSB66TGU
