@@ -22,26 +22,4 @@ Model、View、ViewModel。其中Model和ViewModel互相映射，View和ViewMode
 
 <img src="../vue-data.png">
 
-Vue中从数据到视图，可以简化流程为：Data处理及更新Notify、观察者绑定及Update、VisualDOM&Render。
-
-```javascript
-<!--html-->
-<div id="J_app"></div>
-
-<!-- script-->
-var app = new Vue({
-	el: '#J_app',
-	data: {
-		message: 'hello world'
-	},
-	mounted: function(){
-		this.message = 'hello vue'
-	}
-})
-```
-上面是最基本的一个Vue的demo，从这里开始简要分析一下Vue的整个处理流程。
-
-* data：
- * data初始化：data会被挂载到Vue实例app上，也因此我们可以通过`app.message`访问到`message`的值
- * 监听data：这一步也发生在data初始化时，核心是通过`Object.defineProperty`，给data中每一项添加`getter`和`setter`方法，，data发生变化时，setter方法被调用，同时调用`notify()`方法发布通知
-
+Vue中从数据到视图，可以简单分为几大块：[Data监听与更新](../chapter2/section2.html)、[VisualDOM && Render](../chapter2/section3.html)、[Wather的实现]((../chapter2/section4.html))。在随后几篇笔记中会分块分析每一步的实现。

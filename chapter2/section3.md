@@ -1,2 +1,2 @@
-# Vue之VisualDOM
+# Vue之VisualDOM && Render
 
