@@ -38,8 +38,8 @@ Object.defineProperty(o, 'b', {
 Vue实现观察者模式主要通过三个类：Observer类、Watcher类、Dep类
 
 * Observer：通过`defineProperty`给数据添加`get`和`set`方法并在`get`中收集依赖，在`set`中通知更新
-* Watcher：观察数据变化（接收`Observer `的`set`发出的通知），执行回调
-* Dep：一个可观察对象，收集订阅、发送通知
+* Watcher：观察数据变化（接收`Dep `的`notify`发出的通知），执行回调
+* Dep：一个可观察对象，收集订阅（在`Observer `的`get`时收集）、发送通知（在`Observer `的`set`时发布）
 
 举例：
 
@@ -172,4 +172,4 @@ function popTarget () {
   Dep.target = targetStack.pop();
 }
 ```
-初始每个可观察对象`dep`都有一个id和观察者数组（subs），可以对当前id的可观察对象：添加观察者（`addSub`）、移除观察者（`removeSub`）、设置为可观察对象（`depend`）、通知变更到观察者们（`notify`），添加和移除观察者相对简单，往数组`push`和`splice`即可；设置为可观察对象调用的是`Dep.target.addDep(this)`，`Dep.target`其实是`Watcher`的实例，下节再看；通知变更到观察者们只是执行了是观察者们的`update`方法，`update`方法也会在下节一起看下。
+初始每个可观察对象`dep`都有一个id和观察者数组（subs），可以对当前id的可观察对象：添加观察者（`addSub`）、移除观察者（`removeSub`）、设置为可观察对象（`depend`）、通知变更到观察者们（`notify`），添加和移除观察者相对简单，往数组`push`和`splice`即可；设置为可观察对象调用的是`Dep.target.addDep(this)`，`Dep.target`其实是`Watcher`的实例，下节再看；通知变更到观察者们只是执行了是观察者们的`update`方法，`update`方法也会在下节[Wather的实现](../chapter2/section4.html)一起看下。
