@@ -1,5 +1,66 @@
 #### Vue之Data监听与更新
 
+####[Object.defineProperty()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
+
+简单用法：
+
+```javascript
+<!--Object.defineProperty(obj, prop, descriptor)-->
+
+var o = {
+	a: 0
+}
+
+Object.defineProperty(o, 'b', {
+	get: function () {
+		console.log('get')
+		return 'get'
+	},
+	set: function (value) {
+		console.log(value)
+	},
+	configurable: true,
+	enumerable: true
+})
+```
+例中
+
+* **`Object.defineProperty(o, 'b', {})`**表示给`o`添加一个叫`b`的属性
+* **`get`**定义在读取`o.b`时执行的方法，`get`方法的执行结果为`o.b`的值
+* **`set`**定义在给`o.b`设置值时执行的方法
+* **`configurable`**表示`o.b`是否可变及可被删除
+* **`enumerable`**表示`o`的`b`属性是否可以通过`for-in`遍历获取到
+
+简单说，我们可以通过`Object.defineProperty`给一个对象添加一个属性，并且这个属性的值在被查询和被改变时都可以触发我们事先定义好的事件。
+
+在Vue中，`Object.defineProperty`是对数据追踪核心也是依赖的这个方法。为对象添加属性的方法`defineReactive$$1`可以简写下：
+
+```javascript
+/*
+*参数含义：
+*obj: 需要添加属性的对象
+*key: 要添加的属性名
+*value: 要添加的属性名对应的值
+*customSetter: 在非生产环境，一些自定义的错误警告
+* shallow: 属性值是否添加到挂载到vm上
+*/
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ```javascript
 <!--html-->
 <div id="J_app"></div>
