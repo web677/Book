@@ -24,4 +24,5 @@
     * [编写可维护的JavaScript（二）](chapter5/section5.md)
 * [做点小题](chapter6/README.md)
     * [椭圆可点区域的实现](chapter6/section1.md)
+    * [关于数据类型的小题](chapter6/section2.md)
 
