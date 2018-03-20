@@ -51,7 +51,7 @@
 
     此问题的解决方案有两种，第一种方案是简单的设置一个白名单；另一种方案，如果之前设置`Access-Control-Allow-Origin: *`，此时可以在服务器配置文件进行设置：先获取发起跨域请求的源域，然后设置`Access-Control-Allow-Origin`的值为获取到的源域。当然这个设置可能在后端某些配置文件里，也可能直接在服务器配置文件设置。但思路大概相似。
 
-* fetch.js源码
+* 附：fetch.js
 
     简单封装，主要就是对上面几个问题进行了处理。
 
@@ -64,34 +64,34 @@
         options
     ) => {
 
-    let _options = Object.assign({
-        method: 'get',
-        toastInfo: true,
-        withCredentials: true
-    }, options)
+        let _options = Object.assign({
+            method: 'get',
+            toastInfo: true,
+            withCredentials: true
+        }, options)
 
-    let [ _params, _data ] = _options.method === 'get' ? [ params, ''] : [ '', params]
+        let [ _params, _data ] = _options.method === 'get' ? [ params, ''] : [ '', params]
 
-    return axios({
-            method: _options.method,
-            url: url,
-            params: _params,
-            data: _data,
-            withCredentials: _options.withCredentials
-        })
-        .then(res => {
-            let _res = res.data
+        return axios({
+                method: _options.method,
+                url: url,
+                params: _params,
+                data: _data,
+                withCredentials: _options.withCredentials
+            })
+            .then(res => {
+                let _res = res.data
 
-            //doSomething
+                //doSomething
 
-            return _res
-        })
-        .catch(e => {
+                return _res
+            })
+            .catch(e => {
 
-            //doSomething
-            //错误上报
+                //doSomething
+                //错误上报
 
-        })
+            })
     }
 
     export default fetch
