@@ -25,4 +25,7 @@
 * [做点小题](chapter6/README.md)
     * [椭圆可点区域的实现](chapter6/section1.md)
     * [关于数据类型的小题](chapter6/section2.md)
+* [项目日常](chapter7/README.md)
+    * [vue-cli + es6 + axios项目踩坑](chapter7/section1.md)
+    * [vue-cli + es6 + axios项目开发及部署](chapter7/section2.md)
 
