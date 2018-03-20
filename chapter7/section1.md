@@ -10,9 +10,9 @@
 
 在此之前一直用的JQ的`$.ajax`，引入axios后还是有一些不一样的坑要慢慢习惯。
 
-* 请求参数
+* 请求参数方式不一致
 
-    axios中，`get`请求换个`post`请求携带参数的方式不一样，具体如下：
+    axios中，`get`请求和`post`请求携带参数的方式不一样，具体如下：
 
     ```javascript
         axios.get(url, {
@@ -26,7 +26,7 @@
     ```
     解决方案是基于axios简单封了一个`fetch.js`，以简化、统一调用
 
-* 返回值
+* 返回值更多信息
 
     在jq的回调函数中，我们后端返回的数据直接放在参数中，我们可以直接取res来用，在axios中，回调函数的参数，包含了更多的信息：
     * `status:` 请求状态码
@@ -37,7 +37,7 @@
     * `data:` 后端返回的数据
     也就是说，在axios的回调函数中，res.data和`$.ajax`回调函数的res是一致的，而大部分时间，我们只需要知道`res.data`而忽略更多信息，这一点在`fetch.js`中也有优化
 
-* 两次请求
+* 发起一次请求却抓到两个请求
 
     两次请求出现在跨域的前提下，jq中解决跨域问题是通过`jsonp`的方式，而在浏览器的标准中，[预检请求](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/OPTIONS)是更优雅的解决方案。简单说，就是在发生[跨越的非简单请求](http://www.ruanyifeng.com/blog/2016/04/cors.html)时，浏览器会先发送预检请求，同服务端确认是否允许接下来的正式请求，如果被允许，则再发送正式请求。
 
@@ -50,7 +50,53 @@
     在这里，当我们的服务器设置`Access-Control-Allow-Credentials: true`时，会产生新的问题，在浏览器标准中，当服务器中设置`Access-Control-Allow-Credentials`为true时，`Access-Control-Allow-Origin`不能设置为`*`，而`Access-Control-Allow-Origin: *`是我们常用的解决跨域问题的设置。
 
     此问题的解决方案有两种，第一种方案是简单的设置一个白名单；另一种方案，如果之前设置`Access-Control-Allow-Origin: *`，此时可以在服务器配置文件进行设置：先获取发起跨域请求的源域，然后设置`Access-Control-Allow-Origin`的值为获取到的源域。当然这个设置可能在后端某些配置文件里，也可能直接在服务器配置文件设置。但思路大概相似。
-    
+
+* fetch.js源码
+
+    简单封装，主要就是对上面几个问题进行了处理。
+
+    ```javascript
+    import axios from 'axios'
+
+    const fetch = (
+        url, 
+        params = {},
+        options
+    ) => {
+
+    let _options = Object.assign({
+        method: 'get',
+        toastInfo: true,
+        withCredentials: true
+    }, options)
+
+    let [ _params, _data ] = _options.method === 'get' ? [ params, ''] : [ '', params]
+
+    return axios({
+            method: _options.method,
+            url: url,
+            params: _params,
+            data: _data,
+            withCredentials: _options.withCredentials
+        })
+        .then(res => {
+            let _res = res.data
+
+            //doSomething
+
+            return _res
+        })
+        .catch(e => {
+
+            //doSomething
+            //错误上报
+
+        })
+    }
+
+    export default fetch
+    ```
+
 > 上面这些问题参考[HTTP访问控制（CORS）](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS)大抵都能找到合理解释。
 
 ####兼容性
