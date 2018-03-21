@@ -1,118 +1,101 @@
-## vue-cli + es6 + axios项目踩坑
+## vue-cli + es6 多页面项目开发及部署
 
-> 最近新做了一个项目，因为完全是另起炉灶，可以抛开历史问题，重新尝试新的思路与解决方案。也兢兢业业的踩坑俩月，把项目初版跑上线了。这一版主要是保证功能流程没问题，下一版会对开发流程、性能、错误监控等问题进行优化。截至目前记录的一些问题先抽空整理下。
+前端时间项目组计划快速开发一个新的App项目，App开发那边提供壳子和部分系统级功能，所有的页面由h5完成，考虑兼容性安卓4.1及ios7.1。全新的项目，没有历史包袱，就尝试了新的开发模式，采用了`webpack + vue-cli + vue-router + es6 + axios`这一套，从`webpack`配置到文件目录，从开发流程到上线部署，摸索尝试，到目前第一版已经上线。后面会继续优化，先把目前的基本部署方式记录下来。
 
-如题，项目采用`vue-cli + es6 + axios`这三个作为基础跑起来的，依然是移动端，考虑兼容性 `安卓4.1 & ios7.1`，刚开始引入了jq，后续发现完全没必要，就引入了axios的ajax库，然后其他采用原生`JavaScript`及`ES6`进行开发，也没遇到什么大的问题。
+    webpack -- ^3.6.0  |   vue -- ^2.5.2    | vue-router -- ^3.0.1  |    axios -- ^0.17.1
 
-####Axios
+#### 简介
 
-> github地址：[https://github.com/axios/axios](https://github.com/axios/axios)
+* 项目采用前后端分离，后端开发只负责提供接口及静态服务器
+* 前端采用多个入口、多个单页（每个单页可能含vue-router路由到不同的子页面）的方式，最终在dist下生成多个`.html`及对应的`.js/.css`文件
+* 域名根目录直接指向到`npm run build`之后生成的dist目录，可以通过`http://m.example.com/index.html`直接访问到`index.html`
 
-在此之前一直用的JQ的`$.ajax`，引入axios后还是有一些不一样的坑要慢慢习惯。
+最终生成的dist目录类似于：
 
-* 请求参数方式不一致
+- dist
+    - index.html
+    - center/
+        - index.html
+        - regist.html
+        - login.html
+    - static/
+        - js/
+            - vendor.[chunkhash].js
+            - index.[chunkhash].js
+            - regist.[chunkhash].js
+            - login.[chunkhash].js
+        - css/
+            - index.[chunkhash].css
+            - regist.[chunkhash].css
+            - login.[chunkhash].css
 
-    axios中，`get`请求和`post`请求携带参数的方式不一样，具体如下：
+例：`http://m.example.com/index.html`可以访问到首页，`http://m.example.com/center/regist.html`则访问到注册页，而`http://m.example.com/center/regist.html#agreement`访问到用户协议页
 
+#### 目录结构
+
+- dist: 如上，不跟随版本控制
+- build: webpack构建相关配置
+- config: 开发相关配置
+    - webpack.user.conf.js: 新建的自定义配置文件，理论上对webpack的配置更改都在这里进行，然后对`webpack.dev.conf.js`和`webpack.dev.prod.js`进行merge覆盖
+- node_modules: 插件及依赖，不跟随版本控制
+- src: 开发目录
+    - assets: 存放静态资源，含`base.js/base.css/plugins/images`
+    - components: 一些可能公用的小组件
+    - entry: webpack打包的入口文件，有多个`HtmlWebpackPlugin`的实例，每个实例都对应一个入口，每个入口打包出一个页面
+    - router: 某些页面可能会用到`vue-router`实现前端路由，统一在此文件夹下定义，会被entry中的入口js引入使用
+    - template: 存放`HtmlWebpackPlugin`打包基于的模板页，多个入口可以共用一个模板页。但实际开发中可能某些入口有私有的逻辑，需单独创建模板
+    - page: 存放实际页面组件及组装页面
+- package.json: 包信息及依赖
+
+例：如果我们想最终生成`http://m.example.com/center/regist.html`且含有前端路由的话，需要涉及到的文件有：
+
+```html
+1. src/entry/regist.js，以创建入口文件，供`HtmlWebpackPlugin`使用
+2. config/webpack.user.conf.js，新建入口，指定入口文件为`src/entry/regist.js`；新建`HtmlWebpackPlugin`实例，指定打包后生成的文件路径、文件名及js
+3. src/router/regist.js，因为涉及到前端路由，需要配置路由信息
+4. page/center/regist.vue、page/center/agreement.vue，进行页面自身逻辑样式的开发
+```
+
+#### webpack配置
+
+默认的webpack配置大体是采用`build/webpack.base.js + build/webpack.dev.js/build/webpack.prod.js` merge后的结果，为了方便实现统一配置，在config写新建了`webpack.user.conf.js`，再分别和`build/webpack.dev.js/build/webpack.prod.js` merge，因此页面的配置，基本都在`webpack.user.conf.js`进行。
+
+- 配置项
+    - context: 设置在package.json所在的根目录
+    - entry: 设置为`src/entry/`
+    - ouput: 生产环境设置为`/src/dist/`，开发环境默认打包后放在内存中，不代表实际物理路径，output具体配置：
     ```javascript
-        axios.get(url, {
-                params: {
-                    id: 123456
-                }
-            }).then(res => {})
-        axios.post(url, {
-                id: 123456
-            }).then(res => {})
-    ```
-    解决方案是基于axios简单封了一个`fetch.js`，以简化、统一调用
-
-* 返回值更多信息
-
-    在jq的回调函数中，我们后端返回的数据直接放在参数中，我们可以直接取res来用，在axios中，回调函数的参数，包含了更多的信息：
-    * `status:` 请求状态码
-    * `statusText:` 请求状态描述
-    * `headers:` 响应头相关信息
-    * `config:` 请求的相关配置
-    * `request:` 当次请求相关信息
-    * `data:` 后端返回的数据
-    也就是说，在axios的回调函数中，res.data和`$.ajax`回调函数的res是一致的，而大部分时间，我们只需要知道`res.data`而忽略更多信息，这一点在`fetch.js`中也有优化
-
-* 发起一次请求却抓到两个请求
-
-    两次请求出现在跨域的前提下，jq中解决跨域问题是通过`jsonp`的方式，而在浏览器的标准中，[预检请求](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/OPTIONS)是更优雅的解决方案。简单说，就是在发生[跨越的非简单请求](http://www.ruanyifeng.com/blog/2016/04/cors.html)时，浏览器会先发送预检请求，同服务端确认是否允许接下来的正式请求，如果被允许，则再发送正式请求。
-
-    因此我们可能发现我们只发送了一次post请求，但却抓到两次请求，别担心，这不是bug，是个feature。
-
-* 跨域请求不带cookie
-
-    跨域请求默认不发送Cookie和HTTP认证信息。如果要把Cookie发到服务器，一方面要服务器同意，指定Access-Control-Allow-Credentials字段：`Access-Control-Allow-Credentials: true`，另一方面，开发者在发起ajax请求时设置withCredentials为true，这一点也在`fetch.js`中做了处理。
-
-    在这里，当我们的服务器设置`Access-Control-Allow-Credentials: true`时，会产生新的问题，在浏览器标准中，当服务器中设置`Access-Control-Allow-Credentials`为true时，`Access-Control-Allow-Origin`不能设置为`*`，而`Access-Control-Allow-Origin: *`是我们常用的解决跨域问题的设置。
-
-    此问题的解决方案有两种，第一种方案是简单的设置一个白名单；另一种方案，如果之前设置`Access-Control-Allow-Origin: *`，此时可以在服务器配置文件进行设置：先获取发起跨域请求的源域，然后设置`Access-Control-Allow-Origin`的值为获取到的源域。当然这个设置可能在后端某些配置文件里，也可能直接在服务器配置文件设置。但思路大概相似。
-
-* 附：fetch.js
-
-    简单封装，主要就是对上面几个问题进行了处理。
-
-    ```javascript
-    import axios from 'axios'
-
-    const fetch = (
-        url, 
-        params = {},
-        options
-    ) => {
-
-        let _options = Object.assign({
-            method: 'get',
-            toastInfo: true,
-            withCredentials: true
-        }, options)
-
-        let [ _params, _data ] = _options.method === 'get' ? [ params, ''] : [ '', params]
-
-        return axios({
-                method: _options.method,
-                url: url,
-                params: _params,
-                data: _data,
-                withCredentials: _options.withCredentials
-            })
-            .then(res => {
-                let _res = res.data
-
-                //doSomething
-
-                return _res
-            })
-            .catch(e => {
-
-                //doSomething
-                //错误上报
-
-            })
+    output: {
+        path: path.resolve(__dirname, '../dist'),
+        filename: 'static/js/[name].[chunkhash:16].js',
+        chunkFilename: 'static/js/[id].[chunkhash:16].js',
+        publicPath: '/pailifan/'
     }
-
-    export default fetch
     ```
+    - plugins: 插件配置
+        - HtmlWebpackPlugin: new多个实例，每个实例对应一个单页
+        - CommonsChunkPlugin: 公共模块提取打包，默认指定将[vue.js -v2.5.2, vue-router.js -v3.0.1]打包，同时设置minChunks为Infinity以防止其他公用模块被打包进来
+        ```javascript
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',         /*在entry中指定vendor对应的模块为[vue.js,vue-router.js]*/
+            filename: 'static/js/vendor.[chunkhash:16].js',
+            minChunks: Infinity
+        })
+        ```
 
-> 上面这些问题参考[HTTP访问控制（CORS）](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS)大抵都能找到合理解释。
+#### 需求开发及部署流程
 
-####兼容性
+1. 拉取代码
+2. 切换到package.json所在根目录，执行`npm i && npm run dev`
+3. 新建页面（见目录结构部分的例）或者修改
+4. 提交代码，忽略目录包括`src/dist`、`src/node_modules`
+5. 内测/外测/灰度/生产，执行`npm i && npm run build`，生产环境不能直接操作dist目录（npm run build实际会先删除dist目录再生成，直接操作会导致发布时文件404），需先在发布机生成dist后覆盖到生产服务器对应的dist目录
+6. 版本回退，回退代码，然后执行`npm i && npm run build`，同发布一致
 
-* Promise
+#### 其他第三方插件和库
 
-Promise兼容性一般，`vue-cli`脚手架中默认没有对Promise进行pollyfill，在目前的项目中，引用了[`es6-promise`](https://github.com/stefanpenner/es6-promise)进行兼容处理，大致也就是在不兼容的情况下自定义实现一个Promise
+* [axios](https://github.com/axios/axios): ajax库，部分坑已经另一篇笔记中进行了解释及提出解决方案
+* [vue-touch](https://github.com/vuejs/vue-touch/tree/next): 手势库
+* [es6-promise](https://github.com/stefanpenner/es6-promise): 对Promise进行pollyfill 
 
-* Array.prototype.findIndex
-
-这个属性在开发过程中多次用到，个人觉得很好用，但兼容性也堪忧，就在base.js中添加了pollyfill，pollyfill中还用到了`Object.defineProperty`，所以如果vue无法兼容的，这个pollyfill也无法兼容啦
-
-* Input[type=date]
-
-原生的日期选择组件用起来不管是在安卓上还是ios上体验都很棒，但是安卓4.3及以下不识别，此处通过ua判断了系统版本，安卓4.3以下采用底部弹窗的方式让用户输入日期，牺牲一部分用户的体验。
-
-* 开发及部署
-
-这个相关的问题另起一篇吧，此次项目采用的是前端路由加多个单页应用，后端只提供接口及静态文件服务器，具体开发流程和部署：[vue-cli + es6 + axios项目开发及部署](../chapter7/section2.html)。
+> 附: [vue-cli + es6 + axios项目踩坑](../chapter7/section2.html)
