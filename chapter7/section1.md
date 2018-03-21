@@ -1,6 +1,6 @@
 ## vue-cli + es6 多页面项目开发及部署
 
-前端时间项目组计划快速开发一个新的App项目，App开发那边提供壳子和部分系统级功能，所有的页面由h5完成，考虑兼容性安卓4.1及ios7.1。全新的项目，没有历史包袱，就尝试了新的开发模式，采用了`webpack + vue-cli + vue-router + es6 + axios`这一套，从`webpack`配置到文件目录，从开发流程到上线部署，摸索尝试，到目前第一版已经上线。后面会继续优化，先把目前的基本部署方式记录下来。
+前段时间项目组计划快速开发一个新的App项目，App开发那边提供壳子和部分系统级功能，所有的页面由h5完成，考虑兼容性安卓4.1及ios7.1。全新的项目，没有历史包袱，就尝试了新的开发模式，采用了`webpack + vue-cli + vue-router + es6 + axios`这一套，从`webpack`配置到文件目录，从开发流程到上线部署，摸索尝试，到目前第一版已经上线。后面会继续优化，先把目前的基本部署方式记录下来。
 
     webpack -- ^3.6.0  |   vue -- ^2.5.2    | vue-router -- ^3.0.1  |    axios -- ^0.17.1
 
@@ -58,7 +58,7 @@
 
 #### webpack配置
 
-默认的webpack配置大体是采用`build/webpack.base.js + build/webpack.dev.js/build/webpack.prod.js` merge后的结果，为了方便实现统一配置，在config写新建了`webpack.user.conf.js`，再分别和`build/webpack.dev.js/build/webpack.prod.js` merge，因此页面的配置，基本都在`webpack.user.conf.js`进行。
+默认的webpack配置大体是采用`build/webpack.base.js + build/webpack.dev.js/build/webpack.prod.js` merge后的结果，为了方便实现统一配置，在config下新建了`webpack.user.conf.js`，再分别和`build/webpack.dev.js/build/webpack.prod.js` merge，因此页面的配置，基本都在`webpack.user.conf.js`进行。
 
 - 配置项
     - context: 设置在package.json所在的根目录
