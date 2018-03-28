@@ -1,12 +1,16 @@
 {
     "plugins": [
-        "tbfed-pagefooter"
+        "tbfed-pagefooter",
+        "github"
     ],
     "pluginsConfig": {
         "tbfed-pagefooter": {
-            "copyright": "&copy 豫ICP备17041991号-1",
+            "copyright": "<a href='https://book.eshengeshu.com/'>&copy 豫ICP备17041991号-1</a>",
             "modify_label": "最后更新时间：",
             "modify_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        "github": {
+            "url": "https://github.com/web677"
         }
     }
 }
