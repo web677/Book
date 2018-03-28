@@ -6,7 +6,7 @@
     ],
     "pluginsConfig": {
         "tbfed-pagefooter": {
-            "copyright": "&copy <a href='www.miitbeian.gov.cn'>豫ICP备17041991号-1</a>",
+            "copyright": "&copy <a target='_blank' href='http://www.miitbeian.gov.cn'>豫ICP备17041991号-1</a>",
             "modify_label": "最后更新时间：",
             "modify_format": "YYYY-MM-DD HH:mm:ss"
         },
