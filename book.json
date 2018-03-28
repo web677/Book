@@ -6,7 +6,7 @@
     ],
     "pluginsConfig": {
         "tbfed-pagefooter": {
-            "copyright": "<a href='https://book.eshengeshu.com/'>&copy 豫ICP备17041991号-1</a>",
+            "copyright": "&copy 豫ICP备17041991号-1    版权所有",
             "modify_label": "最后更新时间：",
             "modify_format": "YYYY-MM-DD HH:mm:ss"
         },
