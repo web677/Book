@@ -1,0 +1,12 @@
+{
+    "plugins": [
+        "tbfed-pagefooter"
+    ],
+    "pluginsConfig": {
+        "tbfed-pagefooter": {
+            "copyright": "&copy 豫ICP备17041991号-1",
+            "modify_label": "最后更新时间：",
+            "modify_format": "YYYY-MM-DD HH:mm:ss"
+        }
+    }
+}
