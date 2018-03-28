@@ -14,8 +14,8 @@
             "url": "https://github.com/web677"
         },
         "favicon": {
-            "shortcut": "favico.ico",
-            "bookmark": "favico.ico",
+            "shortcut": "favicon.ico",
+            "bookmark": "favicon.ico",
             "appleTouch": "apple-touch-icon.png"
         }
     }
