@@ -47,3 +47,20 @@ function testValue(id, value, property) {
     return false
 }
 ```
+
+## 背景与边框
+
+- 半透明边框：如果期望半透明的边框下面透出的不是元素本身的`background-color/background-image`，可以对元素使用`background-clip: padding-box;`
+- 多重边框
+  - `box-shadow`: 5个参数，分别为x方向偏移量、y方向偏移量、模糊值、扩张半径、投影颜色，前三个值设置0，第四个值设置为正，即可得到一个实线边框
+    ```css
+    div{
+        width: 100px;
+        height: 100px;
+        border: 10px solid green;
+        box-shadow: 0 0 0 10px inset red, 0 0 0 20px inset yellow;
+    }
+    ```
+    我们还可以使用逗号分隔，创建出更多层边框，也可以使用inset，让`box-shadow`往内延伸
+
+  - `outline`: `outline`的优势在于我们可以创建出和`border`一样效果的虚线描边，缺点在`outline`只能设置一层描边，加上`border`最多形成两层边框，并且在目前大多数浏览器，`outline`并不会贴合`border-radius`的圆角，这是一个已经在规范中修正的bug，具体实现有待浏览器支持
