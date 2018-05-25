@@ -20,6 +20,6 @@ Model、View、ViewModel。其中Model和ViewModel互相映射，View和ViewMode
 
 > [深入响应式原理](https://cn.vuejs.org/v2/guide/reactivity.html)
 
-<img src="../vue-data.png">
+<img src="../assets/images/2-1-0.png">
 
 Vue中从数据到视图，可以简单分为几大块：[Data监听与更新](../chapter2/section2.html)、[VisualDOM && Render](../chapter2/section3.html)、[Wather的实现](../chapter2/section4.html)。在随后几篇笔记中会分块分析每一步的实现。
