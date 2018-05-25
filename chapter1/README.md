@@ -1,4 +1,4 @@
-##JavaScript基础回炉系列
+# JavaScript基础回炉系列
 
 越来越发现，基础的重要。
 

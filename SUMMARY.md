@@ -32,4 +32,3 @@
 * [项目日常](chapter7/README.md)
   * [vue-cli + es6 多页面项目开发及部署](chapter7/section1.md)
   * [vue-cli + es6 + axios项目踩坑](chapter7/section2.md)
-

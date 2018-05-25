@@ -1,41 +1,40 @@
-## 前端代码组织与部署
-
+# 前端代码组织与部署
 
 前端代码组织和部署主要涉及到了：Vue2 + Vue-Router + Axios + ElementUI + WebPack。
-	
-	Vue： 负责页面组件（components）的实现，包括DOM、Style和事件的处理；
-	Vue-Router： 因为纯前端页面开发时，采用的是同一入口的单页面应用，Vue-router负责页面之间路由；
-	Axios： 是一个Vue版本的Ajax库；
-	ElementUI： 引入是因为一些表格、弹层、loading等可以很方便的直接import然后使用；
-	WebPack： 代码构建、打包，更多功能如代码检查、单元测试没有用到。
-	
-* 代码组织结构
 
-	* build: 主要存放构建相关配置文件，没有复杂需求，所以主要改动了其中的`webpack.base.conf.js`和`webpack.dev.conf.js`及`webpack.prod.conf.js`，主要配置构建时生成的文件名、路径、模块、模板等
-	* config: 主要存放代码依赖的相关配置，比如环境、模块路径、模块名等
-	* src: 主要代码
-		* components: 小组件，比如一个标准的form，比如公用的header，比如前端格式验证的js
-		* entry: 开发环境是单页应用，所以是单一入口，生产环境是多个单页应用，所以有多个入口，都在entry下配置
-		* page: 页面代码，引入组件组成页面，页面本身逻辑，引入样式等
-		* routes: 开发环境只有一个dev-router.js，生产环境多个路由，每个单页对应一个路由，通过服务端路由分发到前面的entry通过前端router到page
-		* App.vue: 入口文件
-	* static: 静态文件
-		* css
-		* images
-	* package.json: 管理项目基本信息
-	
+    - Vue： 负责页面组件（components）的实现，包括DOM、Style和事件的处理；
+    - Vue-Router： 因为纯前端页面开发时，采用的是同一入口的单页面应用，Vue-router负责页面之间路由；
+    - Axios： 是一个Vue版本的Ajax库；
+    - ElementUI： 引入是因为一些表格、弹层、loading等可以很方便的直接import然后使用；
+    - WebPack： 代码构建、打包，更多功能如代码检查、单元测试没有用到。
+
+- 代码组织结构
+
+  - build: 主要存放构建相关配置文件，没有复杂需求，所以主要改动了其中的`webpack.base.conf.js`和`webpack.dev.conf.js`及`webpack.prod.conf.js`，主要配置构建时生成的文件名、路径、模块、模板等
+  - config: 主要存放代码依赖的相关配置，比如环境、模块路径、模块名等
+  - src: 主要代码
+    - components: 小组件，比如一个标准的form，比如公用的header，比如前端格式验证的js
+    - entry: 开发环境是单页应用，所以是单一入口，生产环境是多个单页应用，所以有多个入口，都在entry下配置
+    - page: 页面代码，引入组件组成页面，页面本身逻辑，引入样式等
+    - routes: 开发环境只有一个dev-router.js，生产环境多个路由，每个单页对应一个路由，通过服务端路由分发到前面的entry通过前端router到page
+    - App.vue: 入口文件
+  - static: 静态文件
+    - css
+    - images
+  -package.json: 管理项目基本信息
+
 事实上，上述文件都不会在生产环境实际使用。常规情况下，会有一个dist目录，存放构建后的代码，因为在这里我是前后端一起写，所以直接打包构建后放在server下，也就是服务端目录下。实际在生产环境使用的是打包后的js文件，每个单页应用实际是一个html模板+js文件，通过url访问页面时，server端直接读取html然后返回给前台。
 
-* 数据传递
+- 数据传递
 
 因为就是练手页面，数据很简单，采用的是Event Bus的方式进行同一单页应用，不同页面间的数据传递和通信
 
 贴几个文件的代码
-	
-* 入口文件App.vue
 
-```vue
-<!-- template -->
+- 入口文件App.vue
+
+```javascript
+/* template */
 <template>
     <router-view
         class="view"
@@ -46,21 +45,21 @@
     </router-view>
 </template>
 
-<!-- script -->
+/* script */
 <script>
 export default {
     components: {}
 }
 </script>
 
-<!-- style -->
+/* style */
 <style>
     @import "../static/css/base.css"
 </style>
 
 ```
 
-* 开发环境主路由routes/dev-router.js
+- 开发环境主路由routes/dev-router.js
 
 ```javascript
 import Vue from 'vue'
@@ -100,9 +99,9 @@ export default [
   ]
 ```
 
-* 登录注册公用表单components/Center-form.vue
+- 登录注册公用表单components/Center-form.vue
 
-```vue
+```javascript
 <template>
     <form class="base-form login-form" action="javascript:;" autocomplete="off">
         <h3 class="base-title">{{formData.title}}</h3>
@@ -218,9 +217,9 @@ export default [
 </style>
 ```
 
-* 注册页面page/regist.vue
+- 注册页面page/regist.vue
 
-```vue
+```javascript
 <template>
     <div>
         <common-header
@@ -255,10 +254,10 @@ const registUrl = "//" + window.location.host + "/center/ajaxregist";
         },
 
         computed: {
-            
+
         },
         methods: {
-            
+
         },
         created () {
             document.title = "注册"
@@ -284,5 +283,3 @@ const registUrl = "//" + window.location.host + "/center/ajaxregist";
     @import "../../static/css/login.css"
 </style>
 ```
-
-

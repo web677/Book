@@ -2,12 +2,12 @@
 
 ## 以下代码片段的输出结果是什么？
 
-  ```javascript
-    var a = 'I am a web developer!'
-    var b = a.split('').reverse().join('')
+```javascript
+var a = 'I am a web developer!'
+var b = a.split('').reverse().join('')
 
-    console.log(b)
-  ```
+console.log(b)
+```
 
 ## 结果
 
