@@ -115,7 +115,8 @@ DOM是一个独立于语言的，使用`XML`和`HTML`文档操作的应用程序
     ```javascript
     function getDivClass1(className1,className2){
         var results = [];
-        divs = document.getElementByTagName("div");
+        var divs = document.getElementByTagName("div");
+
         for (var i = 0,len = divs.length; i < len; i++){
             _className = divs[i].className;
             if(_className === className1 || _className === className2){
@@ -156,6 +157,7 @@ DOM是一个独立于语言的，使用`XML`和`HTML`文档操作的应用程序
     就是将已布局好的节点，加上对应的颜色等信息，绘制在页面上。
 
     当然，浏览器并不会等到全部的HTML文档信息都拿到之后才进行解析，也不会等到全部解析完毕之后才会进行构建`render tree`和`设置布局`。渲染引擎可能在接收到一部分文档后就开始解析，在解析了一部分文档后就开始进行构建`render tree`和`layout render tree`。
+
 ### **JavaScript引擎的工作：**
 
 正常的流程中，渲染引擎在遇到`<script>`标记时，会停止解析，由`JavaScript`引擎立即执行脚本，如果是外部则立即进行下载并执行，这期间渲染引擎是不工作的。如果脚本被标注为`defer`时，脚本立即进行下载，但暂不执行，而且这期间也不会阻塞渲染引擎的渲染，脚本会在文档解析完毕之后执行；如果脚本被标注为`async`时，脚本立即进行下载，下载完成后会立即执行，只不过这个过程和渲染时两个线程进行的，二者是异步执行，同样不会影响页面渲染。`defer`和`async`二者的区别是：虽然都是立即下载（这两个都只作用于外部脚本），但是前者是在文档解析完毕后执行，后者是下载完成后立即执行，因此前者可以保证脚本按照顺序执行，而后者谁先下载完谁先执行会导致依赖关系混乱。
@@ -174,18 +176,19 @@ DOM是一个独立于语言的，使用`XML`和`HTML`文档操作的应用程序
     ```javascript
     var computedValue,
         tmp = '',
-        bodystyle = document.body.style; 
-        if (document.body.currentStyle) { 
-            computedValue = document.body.currentStyle; 
-        }else{  
-            computedValue = document.defaultView.getComputedStyle(document.body, '');
-        } 
-        bodystyle.color = 'red'; 
-        tmp = computedValue.backgroundColor; 
-        bodystyle.color = 'white'; 
-        tmp = computedValue.backgroundImage; 
-        bodystyle.color = 'green'; 
-        tmp = computedValue.backgroundAttachment;
+        bodystyle = document.body.style;
+
+    if (document.body.currentStyle) {
+        computedValue = document.body.currentStyle;
+    }else{
+        computedValue = document.defaultView.getComputedStyle(document.body, '');
+    }
+    bodystyle.color = 'red';
+    tmp = computedValue.backgroundColor;
+    bodystyle.color = 'white';
+    tmp = computedValue.backgroundImage;
+    bodystyle.color = 'green';
+    tmp = computedValue.backgroundAttachment;
     ```
 
     上面示例中，`body`的字体颜色被改变了三次，每次改变后都对`body`的样式信息进行了查询，虽然查询的信息和字体颜色无关，但是浏览器会因此刷新渲染队列并进行重排，所以共进行了三次重排，也理所当然的进行了三次重绘，这里可以改进一下：
@@ -193,18 +196,19 @@ DOM是一个独立于语言的，使用`XML`和`HTML`文档操作的应用程序
     ```javascript
     var computedValue,
         tmp = '',
-        bodystyle = document.body.style; 
-        if (document.body.currentStyle) { 
-            computedValue = document.body.currentStyle; 
-        }else{  
-            computedValue = document.defaultView.getComputedStyle(document.body, '');
-        } 
-        bodystyle.color = 'red'; 
-        bodystyle.color = 'white'; 
-        bodystyle.color = 'green';
-        tmp = computedValue.backgroundColor; 
-        tmp = computedValue.backgroundImage; 
-        tmp = computedValue.backgroundAttachment;
+        bodystyle = document.body.style;
+
+    if (document.body.currentStyle) {
+        computedValue = document.body.currentStyle;
+    }else{
+        computedValue = document.defaultView.getComputedStyle(document.body, '');
+    }
+    bodystyle.color = 'red';
+    bodystyle.color = 'white';
+    bodystyle.color = 'green';
+    tmp = computedValue.backgroundColor;
+    tmp = computedValue.backgroundImage;
+    tmp = computedValue.backgroundAttachment;
     ```
 
     在下面的例子中，实际上引起了一次重排和两次重绘，首先`bodystyle.color`的三次变化被批量化一次处理，只进行了一次重绘，接着对`computedValue`的访问批量处理，进行了一次重排，接着此次重排又引起一次重绘。速度要比优化之前的更快。因此，尽量不要在布局信息发生变化时对元素尺寸进行查询。
