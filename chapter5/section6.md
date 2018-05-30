@@ -80,3 +80,26 @@
     background: green url(bg.png) no-repeat;
     background-position: calc(100% - 10px) calc(100% - 10px);
     ```
+
+## 形状
+
+- `border-radius`：首先需要知道，`border-radius`是可以传入8个值，如：
+    ```css
+    div{
+        border-radius: 10px 20px 30px 40px / 40px 30px 20px 10px;
+    }
+    ```
+    `/`前后的4个值分别代表【水平半径】和【垂直半径】的【左上、右上、右下、左下】四个角的圆弧半径，一旦有`/`分隔，前面的遵循常规缩写，若无`/`分隔，则表明垂直半径和对应位置的水平半径一致
+- 半椭圆
+    ```css
+    div{
+        border-radius: 50% / 100% 100% 0 0;
+    }
+    ```
+    如果元素的宽度刚好是高度的2倍，则呈现出来的元素为半圆
+- 1/4椭圆
+    ```css
+    div{
+        border-radius: 100% 0 0 0;
+    }
+    ```
