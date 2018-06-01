@@ -108,3 +108,32 @@
 - 菱形图片
   - 常规思路，图片父级旋转，图片本身再旋转回来
   - `clip-path`创建一个只有元素的部分区域可以显示的剪切区域
+- 切角效果
+  - 渐变，原理很简单，从要切的角开始一个渐变，初始色值是透明色
+    ```css
+    background-image: linear-gradient(45deg, transparent 10%, green 10%);
+    ```
+    - 多个切角
+        ```css
+        div{
+            background: linear-gradient(-45deg, transparent 15px, green 0) right,
+                    linear-gradient(45deg, transparent 15px, green 0) left;
+            background-size: 50% 100%;
+            background-repeat: no-repeat;
+        }
+        ```
+    - 弧形切角
+        ```css
+        div{
+            background: radial-gradient(circle at bottom left, transparent 15px, green 0) bottom left;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+        <!-- 多个切角 -->
+        div{
+            background: radial-gradient(circle at bottom left, transparent 15px, green 0) bottom left,
+                    radial-gradient(circle at bottom right, transparent 15px, green 0) bottom right;
+            background-size: 50% 100%;
+            background-repeat: no-repeat;
+        }
+        ```
