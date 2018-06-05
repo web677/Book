@@ -139,3 +139,29 @@
         ```
 - 梯形
   - 利用3D变形属性实现，让元素的`:before`y轴先放大130%，在x轴向后旋转5deg，但实现的梯形不可控，对于宽度不固定的元素很难做到适配
+- 饼图
+  - `transform`：方法的思路比较复杂，假定我们需要一个绿色(green)背景，比率用黑色(black)遮盖，同时我们有一个元素div.pie
+    - 第一步，设置.pie背景为绿色到黑色的渐变，两种颜色各占半圆，接着，设置`.pie::before`为一个刚好覆盖黑色区域的半圆
+        ```css
+        .pie{
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(to right, green 50%, black 0);
+        }
+        .pie::before{
+            content: "";
+            display: block;
+            margin-left: 50%;
+            height: 100%;
+            border-radius: 0 100% 100% 0 / 50%;
+            background: green;
+        }
+        ```
+    - 第二步，设置`.pie::before`沿左边中心旋转，漏出黑色背景，当`.pie::before`旋转180deg时，刚好可以表示50%
+    - 第三步，由于超出50%后，继续旋转`.pie::before`并不能增加漏出的黑色部分，反而会遮盖，此时需要换个思路，大于50%的饼图，`.pie::before`的背景色可以设置为黑色
+    - 第四步，利用动画暂停和延时，我们可以通过两个动画，
+      - 其中一个让`.pie::before`不停的旋转到【0.5turn(180deg)】，另一个动画从上一个动画50%的时候，背景颜色变为黑色
+      - 利用动画延时负值，使动画暂停在某一阶段，从而达到对应比例
+    [效果](http:play.csssecrets.io/pie-static)
+  - svg
