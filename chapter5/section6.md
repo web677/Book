@@ -164,4 +164,37 @@
       - 其中一个让`.pie::before`不停的旋转到【0.5turn(180deg)】，另一个动画从上一个动画50%的时候，背景颜色变为黑色
       - 利用动画延时负值，使动画暂停在某一阶段，从而达到对应比例
     [效果](http:play.csssecrets.io/pie-static)
-  - svg
+  - svg：svg方案相对简单，利用svg的stroke，设置`stroke-dasharray`属性实现。
+    - 画一个背景圆形a
+    - 设置stroke，`stroke-width`为圆形半径的两倍，`stroke-dasharray`设置两个值，分别为(周长 * 比率，周长)
+    - a下面再绘制一个半径为a两倍的园（stroke的表现，总是一半在元素外面，一半在元素里面）
+    - 将图形旋转-90deg（stroke是从3点钟位置开始的）
+    我们还可以把这个思路用js实现，让圆形a的周长刚好是100，这样设置`stroke-dasharray`比较方便，通过计算可得半径为16时，差不多周长刚好为100，因此js实现代码：
+    ```javascript
+    $$('.pie').forEach(function(pie){
+        var p = parseFloat(pie.textContent);
+        var NS = 'https://www.w3.org/2000/svg';
+        var svg = document.createElementNS(NS, 'svg');
+        var cricle = document.createElementNS(NS, 'circle');
+        var title = document.createElementNS(NS, 'title');
+        circle.setAttribute('r', 16);
+        circle.setAttribute('cx', 16);
+        circle.setAttribute('cy', 16);
+        cricle.setAttribute('stroke-dasharray', p + ' 100');
+        svg.setAttribute('viewBox', '0 0 32 32');
+        title.textContent = pie.textContent;
+        pie.textContent = '';
+        svg.appendChild(title);
+        svg.appendChild(circle);
+        pie.appendChild(svg);
+    })
+    ```
+  - 角向渐变方案
+    ```css
+    .pie{
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: conic-gradient(black 40%, green 0);
+    }
+    ```
