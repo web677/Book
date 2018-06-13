@@ -211,3 +211,12 @@
   - filter: 给需要毛玻璃效果的区域的伪类元素添加一个和背景图一样的背景，然后利用filter进行模糊处理，处理细节时，需要将背景的模糊半径放大，以确保毛玻璃边缘不会衰减，然后将超出部分裁剪掉
     [效果](play.csssecrets.io/frosted-glass)
   - 关于`background-attachment: fixed`，会将背景图充满屏幕，与当前元素宽高无关
+- 折角
+  - 两层背景渐变，生成两个三角
+    ```css
+        .test{
+            background: linear-gradient(to left bottom, transparent 50%, rgba(0,0,0,0.4) 0) no-repeat 100% 0 / 2em 2em,
+                        linear-gradient(-135deg, transparent 1.414em, #58a 0);
+            }
+    ```
+  - 借助伪元素和背景渐变，分别生成一个三角，并对伪元素生成的三角，计算尺寸、旋转角度，添加阴影等：[效果](play.csssecrets.io/folded-corner-realistic)。将其中计算尺寸、旋转角度部分，用预处理器的mixin来处理，会更方便维护：[效果](play.csssecrets.io/folded-corner-mixin)
