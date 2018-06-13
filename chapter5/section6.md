@@ -163,7 +163,7 @@
     - 第四步，利用动画暂停和延时，我们可以通过两个动画，
       - 其中一个让`.pie::before`不停的旋转到【0.5turn(180deg)】，另一个动画从上一个动画50%的时候，背景颜色变为黑色
       - 利用动画延时负值，使动画暂停在某一阶段，从而达到对应比例
-    [效果](http:play.csssecrets.io/pie-static)
+    [效果](http://play.csssecrets.io/pie-static)
   - svg：svg方案相对简单，利用svg的stroke，设置`stroke-dasharray`属性实现。
     - 画一个背景圆形a
     - 设置stroke，`stroke-width`为圆形半径的两倍，`stroke-dasharray`设置两个值，分别为(周长 * 比率，周长)
@@ -209,7 +209,7 @@
   - 混合模式: `mix-blend-mode`和`background-blend-mode`
 - 毛玻璃效果
   - filter: 给需要毛玻璃效果的区域的伪类元素添加一个和背景图一样的背景，然后利用filter进行模糊处理，处理细节时，需要将背景的模糊半径放大，以确保毛玻璃边缘不会衰减，然后将超出部分裁剪掉
-    [效果](play.csssecrets.io/frosted-glass)
+    [效果](http://play.csssecrets.io/frosted-glass)
   - 关于`background-attachment: fixed`，会将背景图充满屏幕，与当前元素宽高无关
 - 折角
   - 两层背景渐变，生成两个三角
@@ -219,4 +219,4 @@
                         linear-gradient(-135deg, transparent 1.414em, #58a 0);
             }
     ```
-  - 借助伪元素和背景渐变，分别生成一个三角，并对伪元素生成的三角，计算尺寸、旋转角度，添加阴影等：[效果](play.csssecrets.io/folded-corner-realistic)。将其中计算尺寸、旋转角度部分，用预处理器的mixin来处理，会更方便维护：[效果](play.csssecrets.io/folded-corner-mixin)
+  - 借助伪元素和背景渐变，分别生成一个三角，并对伪元素生成的三角，计算尺寸、旋转角度，添加阴影等：[效果](http://play.csssecrets.io/folded-corner-realistic)。将其中计算尺寸、旋转角度部分，用预处理器的mixin来处理，会更方便维护：[效果](http://play.csssecrets.io/folded-corner-mixin)
