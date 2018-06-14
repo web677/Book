@@ -220,3 +220,9 @@
             }
     ```
   - 借助伪元素和背景渐变，分别生成一个三角，并对伪元素生成的三角，计算尺寸、旋转角度，添加阴影等：[效果](http://play.csssecrets.io/folded-corner-realistic)。将其中计算尺寸、旋转角度部分，用预处理器的mixin来处理，会更方便维护：[效果](http://play.csssecrets.io/folded-corner-mixin)
+
+## 字体排印
+
+- 连字符断行（两端对齐）：`hyphens: auto;`
+- 插入换行：可以采用换行符`0x000A`，css中可以采用`\000A`或者简写为`\A`，配合使用`white-space: pre;`
+- 字体背景斑马条纹：可以采用`linear-gradient`实现斑马`background`，然后设置`background-origin: content-box;`，其中`background-size`y轴方向设置为行高（小数为单位）的两倍，以em为单位，这样可以实现斑马条纹随字号自适应
