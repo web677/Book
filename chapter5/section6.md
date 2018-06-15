@@ -226,3 +226,6 @@
 - 连字符断行（两端对齐）：`hyphens: auto;`
 - 插入换行：可以采用换行符`0x000A`，css中可以采用`\000A`或者简写为`\A`，配合使用`white-space: pre;`
 - 字体背景斑马条纹：可以采用`linear-gradient`实现斑马`background`，然后设置`background-origin: content-box;`，其中`background-size`y轴方向设置为行高（小数为单位）的两倍，以em为单位，这样可以实现斑马条纹随字号自适应
+- 页面展示代码中的缩进：网页中显示代码时，默认的tab是占8个字符的，我们可以通过设置`tab-size`来改变tab所占字符，更友好的显示我们期望在网页中显示的代码，用法：`tab-size: 4;`
+- 连字：`font-variant-ligatures`属性
+- 美化单个字符：自定义`@font-face`，配合使用`unicode-range`指定使用该字体的区间，甚至可以在`@font-face`指定使用某字体的斜体版本
