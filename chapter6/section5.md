@@ -64,3 +64,33 @@
 
 ## 插入排序
 
+令 `n = array.length`；第一遍，我们认为第1个（或第n个）元素为【已排序】，取第二个元素为被参照元素temp，若第一个元素大于temp，将第一个元素值赋给第二个，将temp的值赋给第一个，第二遍，取第三个元素插入在【已排序】元素中适当的位置。直到最后一个元素插入到合适的位置。这里的插入动作是：取第i个元素暂存为temp，然后判断i-1的元素是否大于temp，是则将i-1位向后移动一位到i，再判断i-2元素是否大于temp，大于则向右移动一位到i-1，以此类推；直至i-n不大于temp，则将temp放在i-n+1的位置。
+
+<img src="../assets/images/6-5-2.gif" width="600" alt="选择排序">
+
+```javascript
+    function insertionSort(ary){
+        var l = ary.length,
+            i, j, temp;
+
+        for (i = 1; i < l; i++) {
+            j = i - 1;
+            temp = ary[i];
+            while(j >= 0 && ary[j] > temp){
+                ary[j + 1] = ary[j];
+                j--;
+            }
+            ary[j + 1] = temp;
+        }
+        return ary;
+    }
+```
+
+- 时间复杂度：
+  - 最佳情况：`T(n) = O(n)`
+  - 最差情况：`T(n) = O(n²)`
+  - 平均情况：`T(n) = O(n²)`
+
+## 希尔排序
+
+
