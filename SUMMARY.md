@@ -25,6 +25,8 @@
   * [编写可维护的JavaScript（二）](chapter5/section5.md)
   * [CSS揭秘](chapter5/section6.md)
   * [【github项目】30-seconds-of-code](chapter5/section7.md)
+* [Flutter上手](chapter8/README.md)
+  * [路由和导航](chapter8/section1.md)
 * [做点小题](chapter6/README.md)
   * [椭圆可点区域的实现](chapter6/section1.md)
   * [关于数据类型的小题](chapter6/section2.md)
